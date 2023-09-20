@@ -7,13 +7,11 @@ import psutil
 import base64
 from os import system, name
 from lcu_driver import Connector
-from riotwatcher import LolWatcher, ApiError
 import warnings
-import asyncio
 
 warnings.filterwarnings('ignore')
 # variables
-
+report_message="Hard ping, toxic, don't folow objectif, stole my farm, hard flaming."
 app_port = None
 auth_token = None
 riotclient_auth_token = None
@@ -133,8 +131,6 @@ async def setup_client(connection):
         get_match_history = lcu_api + '/lol-match-history/v1/games/' + str(game_id)
         r = requests.get(get_match_history, headers=lcu_headers, verify=False)
         r = json.loads(r.text)
-        with open("sample.json", "w") as outfile: 
-            json.dump(r, outfile) 
         participant_identities = r["participantIdentities"]
         summoner_info = [{"summonerName": participant["player"]["summonerName"],
                           "puuid": participant["player"]["puuid"],
@@ -146,7 +142,7 @@ async def setup_client(connection):
             if info["summonerName"] in friends:
                 continue
             _report = {
-                "comment": "trash talk, toxic, racist",
+                "comment": report_message,
                 "gameId": game_id,
                 "categories": ["NEGATIVE_ATTITUDE", "VERBAL_ABUSE", "LEAVING_AFK", "ASSISTING_ENEMY_TEAM", "HATE_SPEECH"],
                 "offenderPuuid": info["puuid"],
