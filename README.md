@@ -15,3 +15,5 @@ get the game id, the player of the game username, summonerId, puuid.
 it will get your friendlist and save the player name of it
 If the player is in your friend list, it will not report.
 otherwise, the report is send.
+
+![](Animation.gif)
